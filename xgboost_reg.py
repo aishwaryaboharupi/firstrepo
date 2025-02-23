@@ -24,3 +24,16 @@ print(f"Mean Absolute Error: {mae:.2f}")
 
 # Save Model
 model.save_model("xgboost_regression.json")
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'n_estimators': [50, 100, 150],  
+    'max_depth': [3, 5, 7],  
+    'learning_rate': [0.01, 0.1, 0.2]  
+}
+
+grid_search = GridSearchCV(xgb.XGBRegressor(), param_grid, cv=5, scoring='neg_mean_absolute_error', verbose=1)
+grid_search.fit(X_train, y_train)
+
+print("Best Parameters:", grid_search.best_params_)
