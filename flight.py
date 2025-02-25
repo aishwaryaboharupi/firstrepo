@@ -1,7 +1,9 @@
-import pandas as pd  
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load dataset
-df = pd.read_csv("hypersonic_flight_synthetic.csv")  
+df = pd.read_csv("hypersonic_flight_synthetic.csv")
 
 # Display first few rows
 print(df.head())
@@ -30,27 +32,42 @@ df.to_csv("hypersonic_flight_features.csv", index=False)
 
 # Print summary
 print(df.head())
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Plot correlation heatmap
 plt.figure(figsize=(10, 6))
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
 plt.title("Feature Correlation Heatmap")
+plt.savefig("correlation_heatmap.png")  # Save before show
 plt.show()
-
-# Save the heatmap as an image
-plt.savefig("correlation_heatmap.png")
 
 # Plot Altitude vs Velocity
 plt.figure(figsize=(8, 5))
-sns.scatterplot(x=df["Altitude (km)"], y=df["Velocity (m/s)"])
+sns.scatterplot(x=df["Altitude (km)"], y=df["Velocity (m/s)"], color='blue', edgecolor='black')
 plt.xlabel("Altitude (km)")
 plt.ylabel("Velocity (m/s)")
 plt.title("Altitude vs Velocity")
+plt.grid(True)
+plt.savefig("altitude_vs_velocity.png")  # Save before show
 plt.show()
 
-# Save the scatterplot as an image
-plt.savefig("altitude_vs_velocity.png")
+# Additional Visualization: Velocity vs. Mach Number
+plt.figure(figsize=(8, 5))
+sns.scatterplot(x=df["Velocity (m/s)"], y=df["Mach Number"], color='red', edgecolor='black')
+plt.xlabel("Velocity (m/s)")
+plt.ylabel("Mach Number")
+plt.title("Velocity vs Mach Number")
+plt.grid(True)
+plt.savefig("velocity_vs_mach.png")  # Save before show
+plt.show()
+
+# Additional Visualization: Trajectory Angle vs. Altitude
+plt.figure(figsize=(8, 5))
+sns.scatterplot(x=df["Altitude (km)"], y=df["Trajectory Angle (°)"], color='green', edgecolor='black')
+plt.xlabel("Altitude (km)")
+plt.ylabel("Trajectory Angle (°)")
+plt.title("Trajectory Angle vs Altitude")
+plt.grid(True)
+plt.savefig("trajectory_angle_vs_altitude.png")  # Save before show
+plt.show()
 
 print("Feature engineering and visualization completed successfully!")
